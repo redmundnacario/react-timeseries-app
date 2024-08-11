@@ -38,29 +38,29 @@ jobs:
         name: react-app-build
         path: artifacts/build.tar.gz
 
-  # # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #   - name: Checkout code
-  #     uses: actions/checkout@v3
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-  #   - name: Download build artifact
-  #     uses: actions/download-artifact@v3
-  #     with:
-  #       name: react-app-build
+    - name: Download build artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: react-app-build
 
-  #   - name: Extract build artifact
-  #     run: |
-  #       mkdir -p build
-  #       tar -xzf react-app-build/build.tar.gz -C build
+    - name: Extract build artifact
+      run: |
+        mkdir -p build
+        tar -xzf react-app-build/build.tar.gz -C build
 
-  #   - name: Install Netlify CLI
-  #     run: npm install -g netlify-cli
+    - name: Install Netlify CLI
+      run: npm install -g netlify-cli
 
-  #   - name: Deploy to Netlify
-  #     run: |
-  #       netlify deploy --dir=./build --prod
-  #     env:
-  #       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+    - name: Deploy to Netlify
+      run: |
+        netlify deploy --dir=./build --prod
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
