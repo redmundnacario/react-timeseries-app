@@ -59,6 +59,7 @@ const LineChart: React.FC<LineChartProps> = ({ data, title, color = "#7cb5ec" })
         chartRef.current.destroy();
       }
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, title, color]);
 
   return <div id={chartId}></div>;
