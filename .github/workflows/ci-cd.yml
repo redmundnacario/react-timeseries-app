@@ -50,6 +50,9 @@ jobs:
       with:
         name: react-app-build
 
+    - name: Create build directory
+      run: mkdir -p build
+
     - name: Extract build artifact
       run: |
         tar -xzf build.tar.gz -C build
