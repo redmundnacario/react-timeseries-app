@@ -29,14 +29,13 @@ jobs:
 
     - name: Create build artifact
       run: |
-        mkdir -p artifacts
-        tar -czf artifacts/build.tar.gz -C build .
+        tar -czf build.tar.gz -C build .
 
     - name: Upload build artifact
       uses: actions/upload-artifact@v3
       with:
         name: react-app-build
-        path: artifacts/build.tar.gz
+        path: build.tar.gz
 
   deploy:
     needs: build
@@ -53,8 +52,7 @@ jobs:
 
     - name: Extract build artifact
       run: |
-        mkdir -p build
-        tar -xzf react-app-build/build.tar.gz -C build
+        tar -xzf build.tar.gz -C build
 
     - name: Install Netlify CLI
       run: npm install -g netlify-cli
