@@ -1,0 +1,66 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build React app
+      run: npm run build
+
+    - name: Create build artifact
+      run: |
+        mkdir -p artifacts
+        tar -czf artifacts/build.tar.gz -C build .
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: react-app-build
+        path: artifacts/build.tar.gz
+
+  # deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Download build artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: react-app-build
+
+    - name: Extract build artifact
+      run: |
+        mkdir -p build
+        tar -xzf react-app-build/build.tar.gz -C build
+
+    - name: Install Netlify CLI
+      run: npm install -g netlify-cli
+
+    - name: Deploy to Netlify
+      run: |
+        netlify deploy --dir=./build --prod
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
