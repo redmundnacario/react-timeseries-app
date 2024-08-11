@@ -16,7 +16,7 @@ const TimeSeriesContainer = (props: Props) => {
 
   useEffect(() => {
     // Replace with your API endpoint
-    fetch('http://fast-api-observation-lb-1750211255.us-east-1.elb.amazonaws.com:8000/observations/1')
+    fetch('/api/observations/1')
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
