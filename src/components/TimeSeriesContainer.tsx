@@ -16,7 +16,7 @@ const TimeSeriesContainer = (props: Props) => {
 
   useEffect(() => {
     // Replace with your API endpoint
-    fetch('/api/observations/1')
+    fetch('/api/observations/EQ-12495')
       .then((response) => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
